@@ -11,6 +11,7 @@ export class Notification extends Model {
   content!: string;
   thumbnail?: string;
   NotifyType?: string;
+  notifyService?: string;
 
   static get idColumn() {
     return 'id';
@@ -28,6 +29,7 @@ export class Notification extends Model {
         content: { type: 'string' },
         thumbnail: { type: 'string' },
         NotifyType: { type: 'string', minLength: 1, maxLength: 255 },
+        notifyService: { type: 'string', minLength: 1, maxLength: 255 },
       }
     };
   }

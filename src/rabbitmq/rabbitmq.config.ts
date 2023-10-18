@@ -4,6 +4,6 @@ export const rabbitmqConfig = {
   username: 'guest',
   password: 'guest',
   exchange: 'notifications_exchange',
-  queue: 'notifications_queue',
-  routingKey: 'notifications',
+  // queue: 'notifications_queue',
+  // routingKey: 'notifications',
 };

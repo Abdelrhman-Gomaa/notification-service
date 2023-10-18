@@ -19,7 +19,7 @@ export class NotificationController {
     }
   }
 
-  @Post('/sendNotificationQueue')
+  @Post('/sendNotification')
   async sendNotification(@Body() input: SendNotificationInput, @Res() res: Response): Promise<Response> {
     try {
       const notification = await this.notificationService.sendNotification(input);

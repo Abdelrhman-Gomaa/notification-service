@@ -17,7 +17,11 @@ export class SendNotificationInput {
   @IsString()
   thumbnail?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  NotifyType?: string;
+  NotifyType: string;
+  
+  @IsNotEmpty()
+  @IsString()
+  notifyService: string;
 }

@@ -25,16 +25,18 @@ export class NotificationService {
   }
 
   async sendNotification(input: SendNotificationInput) {
-    await this.rabbitmqService.connect();
-    await this.rabbitmqService.publishMessage(input.content);
-    return await Notification.query().insert(
+    const notification = await Notification.query().insert(
       {
         userId: input.userId,
         parentId: input.parentId,
         content: input.content,
         thumbnail: input.thumbnail,
-        NotifyType: input.NotifyType
+        NotifyType: input.NotifyType,
+        notifyService: input.notifyService
       });
+      await this.rabbitmqService.connect(notification.notifyService,notification.NotifyType);
+      await this.rabbitmqService.publishMessage(input.content, input.NotifyType);
+      return notification
   }
 
   async getUserNotifications(input: FindNotificationInput) {

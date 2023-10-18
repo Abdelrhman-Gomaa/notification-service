@@ -11,6 +11,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string('content').notNullable();
         table.string('thumbnail').nullable();
         table.string('NotifyType').nullable();
+        table.string('notifyService').nullable();
         table.timestamps(true, true);
       });
 }
