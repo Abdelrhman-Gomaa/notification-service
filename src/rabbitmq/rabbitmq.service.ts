@@ -7,7 +7,7 @@ export class RabbitMQService {
   private connection: Connection;
   private channel: Channel;
 
-  async connect(queue: string , routingKey): Promise<void> {
+  async connect(queue?: string , routingKey?: string): Promise<void> {
     try {
       this.connection = await connect({
         hostname: rabbitmqConfig.hostname,
@@ -17,8 +17,8 @@ export class RabbitMQService {
       });
       this.channel = await this.connection.createChannel();
       await this.channel.assertExchange(rabbitmqConfig.exchange, 'direct', { durable: true });
-      await this.channel.assertQueue(queue, { durable: true });
-      await this.channel.bindQueue(queue, rabbitmqConfig.exchange, routingKey);
+      if(queue) await this.channel.assertQueue(queue, { durable: true });
+      if(queue && routingKey) await this.channel.bindQueue(queue, rabbitmqConfig.exchange, routingKey);
     } catch (error) {
       console.error('An error occurred while connecting to RabbitMQ:', error);
       throw error;
