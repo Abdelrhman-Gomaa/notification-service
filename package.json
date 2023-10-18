@@ -22,13 +22,18 @@
     "migration": "knex migrate:latest"
   },
   "dependencies": {
+    "@bull-board/api": "^5.9.1",
+    "@bull-board/express": "^5.9.1",
+    "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@types/amqplib": "^0.10.2",
     "amqplib": "^0.10.3",
+    "bull": "^4.11.4",
     "class-validator": "^0.14.0",
+    "ioredis": "^5.3.2",
     "knex": "^3.0.1",
     "objection": "^3.1.2",
     "pg": "^8.11.3",
