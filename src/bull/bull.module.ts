@@ -10,9 +10,9 @@ export enum CreateClientTypeEnum {
 }
 
 const connectionOptions = {
-  host: process.env.REDIS_HOST,
-  port: +process.env.REDIS_PORT,
-  password: process.env.REDIS_PASS,
+  host: '127.0.0.1', //process.env.REDIS_HOST,
+  port: 6379,//+process.env.REDIS_PORT,
+  // password: process.env.REDIS_PASS,
   ...(process.env.REDIS_DATABASE_INEDX !== undefined && { db: +process.env.REDIS_DATABASE_INEDX }),
   maxRetriesPerRequest: null,
   enableReadyCheck: false
@@ -20,13 +20,9 @@ const connectionOptions = {
   client = new IORedis(connectionOptions),
   subscriber = new IORedis(connectionOptions);
 
-// Queue(queueName: string, url?: string, opts?: QueueOptions): Queue
 
 const queues = [
-  BullModule.registerQueue({ name: 'mail-process' }),
-  BullModule.registerQueue({ name: 'notificationBoard' }),
-  BullModule.registerQueue({ name: 'quoteInBC' }),
-  BullModule.registerQueue({ name: 'customerToBC' }),
+  BullModule.registerQueue({ name: 'notification' }),
 ];
 
 @Global()

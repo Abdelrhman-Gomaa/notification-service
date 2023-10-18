@@ -3,12 +3,26 @@ import { Notification } from './models/notification.model';
 import { SendNotificationInput } from './input/send-notification.input';
 import { FindNotificationInput } from './input/find-notification.input';
 import { RabbitMQService } from 'src/rabbitmq/rabbitmq.service';
+import { Queue } from 'bull';
+import { InjectQueue } from '@nestjs/bull';
 
 
 @Injectable()
 export class NotificationService {
-  constructor(private readonly rabbitmqService: RabbitMQService) { }
+  constructor(
+    private readonly rabbitmqService: RabbitMQService,
+    @InjectQueue('notification') private readonly notificationQueue: Queue,
+  ) { }
 
+  async sendNotificationQueue(input: SendNotificationInput) {
+    await this.notificationQueue.add(
+      'notificationJob', input,
+      {
+        delay: 5000,
+      }
+    );
+    return true;
+  }
 
   async sendNotification(input: SendNotificationInput) {
     await this.rabbitmqService.connect();

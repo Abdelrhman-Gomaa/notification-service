@@ -5,11 +5,13 @@ import { NotificationModule } from './notification/notification.module';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { RabbitmqModule } from './rabbitmq/rabbitmq.module';
+import { NestBullModule } from './bull/bull.module';
 
 @Module({
   imports: [
-    RabbitmqModule,
     NotificationModule,
+    RabbitmqModule,
+    NestBullModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
