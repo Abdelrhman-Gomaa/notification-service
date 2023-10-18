@@ -10,7 +10,6 @@ export class NotificationController {
 
   @Post('/sendNotification')
   async sendNotification(@Body() input: SendNotificationInput, @Res() res: Response): Promise<Response> {
-    await this.notificationService.checkNotification();
     try {
       const notification = await this.notificationService.sendNotification(input);
       return res.status(201).json({ notification });
@@ -22,7 +21,6 @@ export class NotificationController {
 
   @Get('/parentNotification')
   async getParentNotifications(@Body() input: FindNotificationInput, @Res() res: Response): Promise<Response> {
-    await this.notificationService.checkNotification();
     try {
       const notification = await this.notificationService.getParentNotifications(input);
       return res.status(201).json({ notification });
@@ -34,7 +32,6 @@ export class NotificationController {
 
   @Get('/userNotification')
   async getUserNotifications(@Body() input: FindNotificationInput, @Res() res: Response): Promise<Response> {
-    await this.notificationService.checkNotification();
     try {
       const notification = await this.notificationService.getUserNotifications(input);
       return res.status(201).json({ notification });
