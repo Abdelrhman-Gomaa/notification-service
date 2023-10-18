@@ -3,9 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { KnexModule } from 'nestjs-knex';
 import { ConfigModule } from '@nestjs/config';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
+    NotificationModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
