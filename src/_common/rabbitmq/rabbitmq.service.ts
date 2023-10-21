@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { rabbitmqConfig } from './rabbitmq.config';
 import { connect, Connection, Channel } from 'amqplib';
 
@@ -25,6 +25,7 @@ export class RabbitMQService implements OnModuleInit {
         await this.channel.assertQueue(queue.name, { durable: true });
         await this.channel.bindQueue(queue.name, rabbitmqConfig.exchange, queue.routingKey);
       })
+      Logger.log('RabbitMQ connection is initialized ...')
     } catch (error) {
       console.error('An error occurred while connecting to RabbitMQ:', error);
       throw error;

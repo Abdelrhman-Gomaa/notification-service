@@ -15,7 +15,7 @@ export const databaseProviders = [
           database: process.env.DB_NAME,
         },
         migrations: {
-          directory: './src/database/migrations',
+          directory: './src/_common//database/migrations',
         },
         searchPath: ['knex', 'public'],
       });

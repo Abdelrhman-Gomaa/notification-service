@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Notification } from './models/notification.model';
 import { SendNotificationInput } from './input/send-notification.input';
 import { FindNotificationInput } from './input/find-notification.input';
-import { RabbitMQService } from 'src/rabbitmq/rabbitmq.service';
+import { RabbitMQService } from 'src/_common/rabbitmq/rabbitmq.service';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 
