@@ -7,14 +7,13 @@ const config: { [key: string]: Knex.Config; } = {
     client: "postgresql",
     connection: {
       host: 'localhost',
-      port: 5433,
+      port: 5432,
       user: 'postgres',
       password: 'pass123',
       database: 'notification',
-      // filename: "./dev.sqlite3"
     },
     migrations: {
-      directory: './src/database/migrations',
+      directory: './src/_common/database/migrations',
     },
   },
 
