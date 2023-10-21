@@ -8,9 +8,9 @@ export class MailConsumerService implements OnModuleInit {
 	constructor(private readonly rabbitmqService: RabbitMQService) { }
 
 	onModuleInit(): void {
-		console.log('>>>>>>>>>>>');
+		// console.log('>>>>>>>>>>>');
 
-		// this.startConsuming();
+		this.startConsuming();
 	}
 
 	async startConsuming(): Promise<void> {
