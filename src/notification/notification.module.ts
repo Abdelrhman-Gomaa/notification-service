@@ -10,7 +10,7 @@ import { NotificationProcessor } from './notification.processor';
   controllers: [NotificationController],
   providers: [
     NotificationService,
-    NotificationProcessor
+    NotificationProcessor,
   ],
   exports: [
     NotificationService,

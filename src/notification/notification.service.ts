@@ -25,18 +25,21 @@ export class NotificationService {
   }
 
   async sendNotification(input: SendNotificationInput) {
-    const notification = await Notification.query().insert(
-      {
-        userId: input.userId,
-        parentId: input.parentId,
-        content: input.content,
-        thumbnail: input.thumbnail,
-        NotifyType: input.NotifyType,
-        notifyService: input.notifyService
-      });
-      await this.rabbitmqService.connect(notification.notifyService,notification.NotifyType);
-      await this.rabbitmqService.publishMessage(input.content, input.NotifyType);
-      return notification
+    try {
+      await this.rabbitmqService.publishMessage(input.content, input.NotifyType, input.notifyService);
+      return await Notification.query().insert(
+        {
+          userId: input.userId,
+          parentId: input.parentId,
+          content: input.content,
+          thumbnail: input.thumbnail,
+          NotifyType: input.NotifyType,
+          notifyService: input.notifyService
+        });
+    } catch (error) {
+      console.log('>>>>>>>> sendNotification', error);
+      throw error
+    }
   }
 
   async getUserNotifications(input: FindNotificationInput) {

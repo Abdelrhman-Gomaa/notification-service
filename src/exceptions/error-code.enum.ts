@@ -1,3 +1,4 @@
 export enum ErrorCodeEnum {
     UNAUTHORIZED = 600,
+    ERROR_OCCURRED_WTH_RABBITMQ_SERVER = 601,
 }
