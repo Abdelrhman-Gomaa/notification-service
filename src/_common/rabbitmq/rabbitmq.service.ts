@@ -3,13 +3,9 @@ import { rabbitmqConfig } from './rabbitmq.config';
 import { connect, Connection, Channel } from 'amqplib';
 
 @Injectable()
-export class RabbitMQService implements OnModuleInit {
+export class RabbitMQService {
   private connection: Connection;
   private channel: Channel;
-
-  onModuleInit(): void {
-    this.connect();
-  }
 
   async connect(): Promise<void> {
     try {
@@ -24,8 +20,8 @@ export class RabbitMQService implements OnModuleInit {
       rabbitmqConfig.queues.map(async queue => {
         await this.channel.assertQueue(queue.name, { durable: true });
         await this.channel.bindQueue(queue.name, rabbitmqConfig.exchange, queue.routingKey);
-      })
-      Logger.log('RabbitMQ connection is initialized ...')
+      });
+      Logger.log('RabbitMQ connection is initialized ...');
     } catch (error) {
       console.error('An error occurred while connecting to RabbitMQ:', error);
       throw error;
@@ -45,7 +41,7 @@ export class RabbitMQService implements OnModuleInit {
     }
   }
 
-  async consumeMessages(queue: string, callback: (message: string) => void): Promise<void> {
+  async consumeMessages(queue: string, callback: (message: any) => void): Promise<void> {
     try {
       if (!this.channel) {
         throw new Error('RabbitMQ channel is not initialized');

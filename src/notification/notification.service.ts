@@ -11,22 +11,10 @@ import { InjectQueue } from '@nestjs/bull';
 export class NotificationService {
   constructor(
     private readonly rabbitmqService: RabbitMQService,
-    @InjectQueue('notification') private readonly notificationQueue: Queue,
   ) { }
-
-  async sendNotificationQueue(input: SendNotificationInput) {
-    await this.notificationQueue.add(
-      'notificationJob', input,
-      {
-        delay: 5000,
-      }
-    );
-    return true;
-  }
 
   async sendNotification(input: SendNotificationInput) {
     try {
-      await this.rabbitmqService.publishMessage(input.content, input.NotifyType, input.notifyService);
       return await Notification.query().insert(
         {
           userId: input.userId,

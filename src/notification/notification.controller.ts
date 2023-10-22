@@ -8,17 +8,6 @@ import { FindNotificationInput } from './input/find-notification.input';
 export class NotificationController {
   constructor(private notificationService: NotificationService) { }
 
-  @Post('/sendNotificationQueue')
-  async sendNotificationQueue(@Body() input: SendNotificationInput, @Res() res: Response): Promise<Response> {
-    try {
-      await this.notificationService.sendNotificationQueue(input);
-      return res.status(201).json({ message: true });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error });
-    }
-  }
-
   @Post('/sendNotification')
   async sendNotification(@Body() input: SendNotificationInput, @Res() res: Response): Promise<Response> {
     try {
@@ -29,7 +18,6 @@ export class NotificationController {
       return res.status(500).json({ error });
     }
   }
-
 
   @Get('/parentNotification')
   async getParentNotifications(@Body() input: FindNotificationInput, @Res() res: Response): Promise<Response> {

@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { rabbitmqConfig } from 'src/_common/rabbitmq/rabbitmq.config';
 import { RabbitMQService } from 'src/_common/rabbitmq/rabbitmq.service';
+import { Notification } from 'src/notification/models/notification.model';
 
 @Injectable()
 export class MailConsumerService implements OnModuleInit {
@@ -8,8 +8,6 @@ export class MailConsumerService implements OnModuleInit {
 	constructor(private readonly rabbitmqService: RabbitMQService) { }
 
 	onModuleInit(): void {
-		// console.log('>>>>>>>>>>>');
-
 		this.startConsuming();
 	}
 
@@ -17,8 +15,19 @@ export class MailConsumerService implements OnModuleInit {
 		try {
 			await this.rabbitmqService.connect();
 			this.isConnected = true;
-			await this.rabbitmqService.consumeMessages('mail_notifications_queue', (message) => {
-				console.log('>>>>>>>>>>>>>>>>>>', 'Received notification:', message);
+			// let notificationPayload
+			await this.rabbitmqService.consumeMessages('mail_notifications_queue', async (message) => {
+				const msg = JSON.parse(message)
+				await Notification.query().insert(
+					{
+						userId: msg?.userId,
+						parentId: msg?.parentId,
+						content: msg?.content,
+						thumbnail: msg?.thumbnail,
+						NotifyType: msg?.NotifyType,
+						notifyService: 'mail_notifications_queue'
+					});
+				console.log('>>>>>>>> ', msg.content);
 			});
 		} catch (error) {
 			console.log('>>>>>>>> startConsuming', error);

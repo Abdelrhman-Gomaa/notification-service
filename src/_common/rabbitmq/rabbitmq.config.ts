@@ -6,6 +6,5 @@ export const rabbitmqConfig = {
   exchange: 'notifications_exchange',
   queues: [
     { name: 'mail_notifications_queue', routingKey: 'otp' },
-    { name: 'Mobile_sms_queue', routingKey: 'sms' }
   ],
 };
